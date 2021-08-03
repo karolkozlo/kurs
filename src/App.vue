@@ -10,7 +10,8 @@
         :key="friend.id"
         :name="friend.name"
         :phone="friend.phone"
-        :email="friend.email">
+        :email="friend.email"
+        :isFavorite="1">
       </friend-contact>
     </ul>
   </section>

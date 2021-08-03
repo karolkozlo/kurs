@@ -1,6 +1,9 @@
 <template>
   <li class="friend">
-    <h2 class="friend__name">{{ name }}</h2>
+    <h2 class="friend__name">{{ name }} {{ favoriteText }}</h2>
+    <button class="friend__button" @click="toggleFavorite">
+      Toggle Favorite
+    </button>
     <button class="friend__button" @click="toggleDetails">
       {{ detailsButtonText }}
     </button>
@@ -24,26 +27,37 @@ export default {
       type: String
     },
     phone: {
-      type: String,
+      type: String
     },
     email: {
-      type: String,
+      type: String
+    },
+    isFavorite: {
+      type: Boolean
     }
   },
   data() {
     return {
       areDetailsVisible: false,
+      isFriendFavorite: this.isFavorite
     };
   },
   computed: {
     detailsButtonText() {
       const hideShow = this.areDetailsVisible ? 'Hide ' : 'Show ';
       return `${hideShow} Details`;
+    },
+    favoriteText() {
+      const favorite = this.isFriendFavorite ? '(Favorite)' : '';
+      return favorite;
     }
   },
   methods: {
     toggleDetails() {
       this.areDetailsVisible = !this.areDetailsVisible;
+    },
+    toggleFavorite() {
+      this.isFriendFavorite = !this.isFriendFavorite;
     }
   }
 };
