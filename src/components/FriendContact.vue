@@ -1,44 +1,72 @@
 <template>
-  <li class="friend">
-    <h2 class="friend__name">{{ friend.name }}</h2>
+  <li class="friend box">
+    <h2 class="friend__name">{{ name }} {{ favoriteText }}</h2>
+    <button class="friend__button" @click="toggleFavorite">
+      Toggle Favorite
+    </button>
     <button class="friend__button" @click="toggleDetails">
       {{ detailsButtonText }}
     </button>
     <ul class="friend__details" v-if="areDetailsVisible">
       <li class="friend__detail">
         <span class="friend__detail-name">Phone:</span>
-        <span class="friend__detail-value">{{ friend.phone }} </span>
+        <span class="friend__detail-value">{{ phone }} </span>
       </li>
       <li>
         <span class="friend__detail-name">Email:</span>
-        <span class="friend__detail-value">{{ friend.email }} </span>
+        <span class="friend__detail-value">{{ email }} </span>
       </li>
     </ul>
+    <button @click="$emit('delete-friend', this.id)" class="friend__button friend__button--delete">Delete</button>
   </li>
 </template>
 
 <script>
 export default {
+  props: {
+    id: {
+      type: Number,
+      required: true
+    },
+    name: {
+      type: String,
+      required: true
+    },
+    phone: {
+      type: String,
+      required: true
+    },
+    email: {
+      type: String,
+      required: true
+    },
+    isFavorite: {
+      type: Boolean,
+      default: false
+    }
+  },
+  emits: ['toggle-favorite', 'delete-friend'],
   data() {
     return {
-      areDetailsVisible: false,
-      friend: {
-        id: 1,
-        name: 'Manuel Lorenz',
-        phone: '954 354 545',
-        email: 'manuel@mail.com'
-      },
+      areDetailsVisible: false
     };
-  },
-  methods: {
-    toggleDetails() {
-      this.areDetailsVisible = !this.areDetailsVisible;
-    }
   },
   computed: {
     detailsButtonText() {
       const hideShow = this.areDetailsVisible ? 'Hide ' : 'Show ';
       return `${hideShow} Details`;
+    },
+    favoriteText() {
+      const favorite = this.isFavorite ? '(Favorite)' : '';
+      return favorite;
+    }
+  },
+  methods: {
+    toggleDetails() {
+      this.areDetailsVisible = !this.areDetailsVisible;
+    },
+    toggleFavorite() {
+      this.$emit('toggle-favorite', this.id);
     }
   }
 };
