@@ -3,7 +3,7 @@
     <header>
       <h1>My Friends</h1>
     </header>
-
+    <friend-creator @add-contact="addContact"></friend-creator>
     <ul>
       <friend-contact
         v-for="friend in friends"
@@ -21,9 +21,10 @@
 
 <script>
 import FriendContact from './components/FriendContact.vue';
+import FriendCreator from './components/FriendCreator.vue';
 
 export default {
-  components: { FriendContact },
+  components: { FriendContact, FriendCreator },
   data() {
     return {
       friends: [
@@ -55,6 +56,16 @@ export default {
     toggleFavoriteStatus(friendId) {
       const identifiedFriend = this.friends.find(friend => friend.id === friendId);
       identifiedFriend.isFavorite = !identifiedFriend.isFavorite;
+    },
+    addContact(newName, newPhone, newEmail) {
+      const newFriend = {
+        id: new Date().getTime(),
+        name: newName,
+        phone: newPhone,
+        email: newEmail,
+        isFavorite: false
+      };
+      this.friends.push(newFriend);
     }
   }
 };
@@ -67,6 +78,8 @@ export default {
 @color-primary-light: #ff0077;
 @color-secondary: #ec3169;
 @color-shadow: rgba(0, 0, 0, 0.26);
+@color-positive: #35944a;
+@color-positive-light: #25c046;
 
 @font-primary: "Jost", sans-serif;
 
@@ -79,6 +92,16 @@ html {
 
   body {
     margin: 0;
+
+    .box {
+      box-shadow: 0 2px 8px @color-shadow;
+      margin: 1rem auto;
+      border-radius: 10px;
+      padding: 1rem;
+      text-align: center;
+      width: 90%;
+      max-width: 40rem;
+    }
 
     header {
       box-shadow: 0 2px 8px @color-shadow;
@@ -103,16 +126,52 @@ html {
       }
     }
 
+    .friend-form {
+      display: flex;
+      flex-direction: column;
+      .friend-form__button {
+        font: inherit;
+        cursor: pointer;
+        border: 1px solid @color-positive-light;
+        background-color: @color-positive-light;
+        color: white;
+        padding: 0.05rem 1rem;
+        box-shadow: 1px 1px 2px @color-shadow;
+        border-radius: 0.5em;
+        font-weight: 900;
+        font-size: 1.5em;
+        &.friend-form__button:hover,
+        &.friend-form__button:active {
+          background-color: @color-positive;
+        }
+      }
+      .friend-form__title {
+        font-size: 2rem;
+      }
+
+      .friend-form__inputs {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 1rem;
+        width: fit-content;
+        align-self: center;
+        .friend-form__input-row {
+          display: flex;
+          justify-content: space-between;
+          width: 100%;
+          .friend-form__label {
+            font-weight: 700;
+            font-size: 1.2rem;
+            padding-right: 15px;
+          }
+        }
+      }
+    }
+
     #app li,
     .friend {
-      box-shadow: 0 2px 8px @color-shadow;
-      margin: 1rem auto;
-      border-radius: 10px;
-      padding: 1rem;
-      text-align: center;
-      width: 90%;
-      max-width: 40rem;
-
       .friend__name {
         font-size: 2rem;
         border-bottom: 4px solid #ccc;

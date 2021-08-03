@@ -1,5 +1,5 @@
 <template>
-  <li class="friend">
+  <li class="friend box">
     <h2 class="friend__name">{{ name }} {{ favoriteText }}</h2>
     <button class="friend__button" @click="toggleFavorite">
       Toggle Favorite
