@@ -23,23 +23,31 @@
 <script>
 export default {
   props: {
+    id: {
+      type: Number,
+      required: true
+    },
     name: {
-      type: String
+      type: String,
+      required: true
     },
     phone: {
-      type: String
+      type: String,
+      required: true
     },
     email: {
-      type: String
+      type: String,
+      required: true
     },
     isFavorite: {
-      type: Boolean
+      type: Boolean,
+      default: false
     }
   },
+  emits: ['toggle-favorite'],
   data() {
     return {
-      areDetailsVisible: false,
-      isFriendFavorite: this.isFavorite
+      areDetailsVisible: false
     };
   },
   computed: {
@@ -48,7 +56,7 @@ export default {
       return `${hideShow} Details`;
     },
     favoriteText() {
-      const favorite = this.isFriendFavorite ? '(Favorite)' : '';
+      const favorite = this.isFavorite ? '(Favorite)' : '';
       return favorite;
     }
   },
@@ -57,7 +65,7 @@ export default {
       this.areDetailsVisible = !this.areDetailsVisible;
     },
     toggleFavorite() {
-      this.isFriendFavorite = !this.isFriendFavorite;
+      this.$emit('toggle-favorite', this.id);
     }
   }
 };
