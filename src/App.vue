@@ -13,7 +13,8 @@
         :phone="friend.phone"
         :email="friend.email"
         :isFavorite="friend.isFavorite"
-        @toggle-favorite="toggleFavoriteStatus">
+        @toggle-favorite="toggleFavoriteStatus"
+        @delete-friend="deleteFriend">
       </friend-contact>
     </ul>
   </section>
@@ -66,6 +67,9 @@ export default {
         isFavorite: false
       };
       this.friends.push(newFriend);
+    },
+    deleteFriend(friendId) {
+      this.friends = this.friends.filter(friend => friend.id !== friendId);
     }
   }
 };
@@ -80,6 +84,8 @@ export default {
 @color-shadow: rgba(0, 0, 0, 0.26);
 @color-positive: #35944a;
 @color-positive-light: #25c046;
+@color-negative-light: #e71313;
+@color-negative: #be0000;
 
 @font-primary: "Jost", sans-serif;
 
@@ -192,6 +198,17 @@ html {
         &.friend__button:active {
           background-color: @color-secondary;
           border-color: @color-secondary;
+        }
+      }
+
+      .friend__button--delete {
+        border: 1px solid @color-negative-light;
+        background-color: @color-negative-light;
+
+        &.friend__button--delete:hover,
+        &.friend__button--delete:active {
+          background-color: @color-negative;
+          border-color: @color-negative;
         }
       }
     }

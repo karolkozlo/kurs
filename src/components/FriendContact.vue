@@ -17,6 +17,7 @@
         <span class="friend__detail-value">{{ email }} </span>
       </li>
     </ul>
+    <button @click="$emit('delete-friend', this.id)" class="friend__button friend__button--delete">Delete</button>
   </li>
 </template>
 
@@ -44,7 +45,7 @@ export default {
       default: false
     }
   },
-  emits: ['toggle-favorite'],
+  emits: ['toggle-favorite', 'delete-friend'],
   data() {
     return {
       areDetailsVisible: false
